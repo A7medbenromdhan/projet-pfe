@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 import { LanguageService } from '../../core/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
+import { TokenStorage } from 'src/app/core/services/tokenservice.service';
 
 @Component({
   selector: 'app-topbar',
@@ -29,7 +30,8 @@ export class TopbarComponent implements OnInit {
               private authFackservice: AuthfakeauthenticationService,
               public languageService: LanguageService,
               public translate: TranslateService,
-              public _cookiesService: CookieService) {
+              public _cookiesService: CookieService,
+              private token:TokenStorage) {
   }
 
   listLang = [
@@ -85,13 +87,12 @@ export class TopbarComponent implements OnInit {
    * Logout the user
    */
   logout() {
-    if (environment.defaultauth === 'firebase') {
-      this.authService.logout();
-    } else {
-      this.authFackservice.logout();
-    }
+    this.token.signOut()
     this.router.navigate(['/account/login']);
   }
+
+
+  
 
   /**
    * Fullscreen method

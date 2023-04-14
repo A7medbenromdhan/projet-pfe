@@ -22,20 +22,21 @@ import { Auth2Service } from 'src/app/core/services/auth2.service';
  * Login component
  */
 export class LoginComponent implements OnInit {
-  errr:string
+  errr: string
 
-  form:FormGroup
+  form: FormGroup
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
   roles: string[] = [];
+  year: number = new Date().getFullYear();
 
   constructor(
     private authService: Auth2Service,
     private tokenStorage: TokenStorage,
     private route: Router,
-    private fb :FormBuilder
-  ) {}
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit(): void {
     if (this.tokenStorage.getToken()) {
@@ -43,15 +44,15 @@ export class LoginComponent implements OnInit {
       this.roles = this.tokenStorage.getUser().roles;
     }
 
-this.form=this.fb.group({
-  matriculeP:[""],
-  password:[""]
-})
+    this.form = this.fb.group({
+      matriculeP: [""],
+      password: [""]
+    })
   }
 
   onSubmit(): void {
-    
-    
+
+
 
     this.authService.login(this.form.value).subscribe(
       (data) => {
@@ -61,28 +62,28 @@ this.form=this.fb.group({
         this.route.navigate(["/dashboard"])
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-       
-if (data){       
-   Swal.fire({
-  position: 'top-end',
-  icon: 'success',
-  title: 'Bienvenu à notre espace '+this.tokenStorage.getUser().role_portail,
-  showConfirmButton: false,
-  timer: 3000
-});
-} 
+
+        if (data) {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Bienvenu à notre espace ' + this.tokenStorage.getUser().role_portail,
+            showConfirmButton: false,
+            timer: 3000
+          });
+        }
 
 
 
 
-       /* this.toast.success({
-          detail: ' Success Message',
-          summary: data.message,
-          duration: 5000,
-        });*/
+        /* this.toast.success({
+           detail: ' Success Message',
+           summary: data.message,
+           duration: 5000,
+         });*/
       },
       (err) => {
-       this.errr="Veuillez vérifier votre matricule ou mot de passe"
+        this.errr = "Veuillez vérifier votre matricule ou mot de passe"
       }
     );
   }

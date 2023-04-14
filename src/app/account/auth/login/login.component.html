@@ -12,11 +12,7 @@
                 </div>
               </div>
               <div class="col-5 align-self-end">
-                <img
-                  src="assets/images/profile-img.png"
-                  alt=""
-                  class="img-fluid"
-                />
+                <img src="assets/images/profile-img.png" alt="" class="img-fluid" />
               </div>
             </div>
           </div>
@@ -25,82 +21,33 @@
               <a routerLink="/">
                 <div class="avatar-md profile-user-wid mb-4">
                   <span class="avatar-title rounded-circle bg-light">
-                    <img
-                      src="assets/images/round.png"
-                      alt=""
-                      class="rounded-circle"
-                      height="68"
-                    />
+                    <img src="assets/images/avatar-1.jpg" alt="" class="rounded-circle" height="68" />
                   </span>
                 </div>
               </a>
             </div>
             <div class="p-2">
-              <form
-                class="form-horizontal"
-                *ngIf="!isLoggedIn"
-                name="form"
-                (ngSubmit)=" onSubmit()"
-                [formGroup]="form"
-                
-                novalidate
-              >
+              <form class="form-horizontal" *ngIf="!isLoggedIn" name="form" (ngSubmit)=" onSubmit()" [formGroup]="form"
+                novalidate>
                 <div class="mb-3">
                   <label for="email">Matricule</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="matriculeP"
-                    required
-                    formControlName="matriculeP"              
-
-                    placeholder="Entrer votre matricule"
-                  />
+                  <input type="text" class="form-control" name="matriculeP" required formControlName="matriculeP"
+                    placeholder="Entrer votre matricule" />
                 </div>
 
                 <div class="mb-3">
                   <label for="password">Mot de passe</label>
                   <div class="input-group auth-pass-inputgroup">
-                    <input
-                      input
-                      type="password"
-                      class="form-control"
-                      name="password"
-formControlName="password"              
-        required
-                      minlength="6"
-                     
-                      placeholder="Entrer votre mot de passe"
-                    />
-
-                    <button
-                      class="btn btn-light ms-0"
-                      type="button"
-                      id="password-addon"
-                    >
-                      <i class="mdi mdi-eye-outline"></i>
-                    </button>
+                    <input input type="password" class="form-control" name="password" formControlName="password"
+                      required minlength="6" placeholder="Entrer votre mot de passe" />
                     <div class="invalid-feedback"></div>
                   </div>
                 </div>
 
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="remember-check"
-                  />
-                  <label class="form-check-label" for="remember-check">
-                    Souviens-toi de moi
-                  </label>
-                </div>
+
 
                 <div class="mt-3 d-grid">
-                  <button
-                    
-                    class="btn btn-primary"
-                    type="submit"
-                  >
+                  <button class="btn btn-primary" type="submit">
                     Connexion
                   </button>
                 </div>
@@ -117,12 +64,13 @@ formControlName="password"
               Inscription
             </a>
           </p>
+          <p>© {{year}} Dévlopper avec <i class="mdi mdi-heart text-danger"></i> par ArabSoft</p>
         </div>
+
+        
       </div>
     </div>
   </div>
   <!-- end container -->
 </div>
 <!-- end page -->
-
-

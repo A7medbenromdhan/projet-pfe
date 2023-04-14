@@ -7,8 +7,8 @@
             <div class="row">
               <div class="col-7">
                 <div class="text-primary p-4">
-                  <h5 class="text-primary">Free Register</h5>
-                  <p>Get your free Skote account now.</p>
+                  <h5 class="text-primary">Inscription gratuite</h5>
+                  <p>Obtenez votre compte portail gratuit maintenant..</p>
                 </div>
               </div>
               <div class="col-5 align-self-end">
@@ -21,7 +21,7 @@
               <a routerLink="/">
                 <div class="avatar-md profile-user-wid mb-4">
                   <span class="avatar-title rounded-circle bg-light">
-                    <img src="assets/images/logo.svg" alt="" class="rounded-circle" height="34">
+                    <img src="assets/images/avatar-1.jpg" alt="" class="rounded-circle" height="34">
                   </span>
                 </div>
               </a>
@@ -31,7 +31,7 @@
               <form class="needs-validation" name="signupForm" [formGroup]="signupForm" (ngSubmit)="onSubmit()"
                 novalidate>
 
-                <ngb-alert type="success" *ngIf="successmsg" [dismissible]="false">Registeration successfull.
+                <ngb-alert type="success" *ngIf="successmsg" [dismissible]="false">Inscription réussi.
                 </ngb-alert>
 
                 <ngb-alert type="danger" *ngIf="error" [dismissible]="false">{{ error }}</ngb-alert>
@@ -46,10 +46,10 @@
 
                   <input type="text" formControlName="firstname" class="form-control"
                     [ngClass]="{ 'is-invalid': submitted && f.firstname.errors }" id="firstname"
-                    placeholder="Enter Firstname" />
+                    placeholder="Entrez votre prénom" />
 
                   <div *ngIf="submitted && f.firstname.errors" class="invalid-feedback">
-                    <div *ngIf="f.firstname.errors.required">First Name is required</div>
+                    <div *ngIf="f.firstname.errors.required">Le prénom est requis</div>
                   </div>
                 </div>
 
@@ -59,10 +59,10 @@
 
                   <input type="text" formControlName="lastname" class="form-control"
                     [ngClass]="{ 'is-invalid': submitted && f.lastname.errors }" id="lastname"
-                    placeholder="Enter Last Name" />
+                    placeholder="Entrer le nom de famille" />
 
                   <div *ngIf="submitted && f.lastname.errors" class="invalid-feedback">
-                    <div *ngIf="f.lastname.errors.required">Last Name is required</div>
+                    <div *ngIf="f.lastname.errors.required">Le nom de famille est requis</div>
                   </div>
                 </div>
 
@@ -72,10 +72,10 @@
 
                   <input type="text" formControlName="department" class="form-control"
                     [ngClass]="{ 'is-invalid': submitted && f.department.errors }" id="department"
-                    placeholder="Enter Department" />
+                    placeholder="Entrez le département" />
 
                   <div *ngIf="submitted && f.department.errors" class="invalid-feedback">
-                    <div *ngIf="f.department.errors.required">Department is required</div>
+                    <div *ngIf="f.department.errors.required">Le département est requis</div>
                   </div>
                 </div>
 
@@ -98,10 +98,10 @@
 
                   <input type="text" formControlName="phone" class="form-control"
                     [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" id="phone"
-                    placeholder="Enter Phone" />
+                    placeholder="Entrez le téléphone" />
 
                   <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
-                    <div *ngIf="f.phone.errors.required">Phone is required</div>
+                    <div *ngIf="f.phone.errors.required">Le téléphone est requis</div>
                   </div>
                 </div>
 
@@ -113,10 +113,10 @@
 
                   <input type="text" formControlName="post" class="form-control"
                     [ngClass]="{ 'is-invalid': submitted && f.post.errors }" id="post"
-                    placeholder="Enter Post" />
+                    placeholder="Entrez le message" />
 
                   <div *ngIf="submitted && f.post.errors" class="invalid-feedback">
-                    <div *ngIf="f.post.errors.required">Post is required</div>
+                    <div *ngIf="f.post.errors.required">Le poste est requis</div>
                   </div>
                 </div>
 
@@ -126,11 +126,11 @@
                   <!-- <label for="email" class="form-label">Email</label> -->
 
                   <input type="email" formControlName="email" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.email.errors }" id="email" placeholder="Email" />
+                    [ngClass]="{ 'is-invalid': submitted && f.email.errors }" id="email" placeholder="E-mail" />
 
                   <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                    <div *ngIf="f.email.errors.required">Email is required</div>
-                    <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                    <div *ngIf="f.email.errors.required">L'e-mail est requis</div>
+                    <div *ngIf="f.email.errors.email">L'e-mail doit être une adresse e-mail valide</div>
                   </div>
                 </div>
 
@@ -138,26 +138,28 @@
                   <!-- <label for="password" class="form-label">Password</label> -->
 
                   <input type="password" formControlName="password" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }" id="password" placeholder="Password" />
+                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }" id="password" placeholder="Mot de passe" />
 
                   <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                    <div *ngIf="f.password.errors.required">Password is required</div>
+                    <div *ngIf="f.password.errors.required">Mot de passe requis</div>
                   </div>
                 </div>
 
                 <div class="mt-4 d-grid">
-                  <button class="btn btn-primary" type="submit">Register</button>
+                  <button class="btn btn-primary" type="submit">Enregistrer</button>
                 </div>
               </form>
             </div>
           </div>
         </div>
         <!-- end card -->
+        
 
         <div class="mt-5 text-center">
-          <p>Already have an account ? <a routerLink="/account/login" class="fw-medium text-primary"> Login</a>
+          <p>Vous avez déjà un compte ? <a routerLink="/account/login" class="fw-medium text-primary"> Connexion</a>
           </p>
-          <p>© {{year}} Skote. Crafted with <i class="mdi mdi-heart text-danger"></i> by ArabSoft</p>
+          <p>© {{year}} Dévlopper avec <i class="mdi mdi-heart text-danger"></i> par ArabSoft</p>
+
         </div>
       </div> <!-- end col -->
     </div>
