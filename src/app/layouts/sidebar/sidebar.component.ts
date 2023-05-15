@@ -4,8 +4,10 @@ import { EventService } from '../../core/services/event.service';
 import { Router, NavigationEnd } from '@angular/router';
 
 import { HttpClient } from '@angular/common/http';
+import { TokenStorage } from 'src/app/core/services/tokenservice.service';
 
-import { MENU } from './menu';
+
+import { ADMIN_MENU, CHEF_MENU, PERSONNEL_MENU } from './menu';
 import { MenuItem } from './menu.model';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -23,12 +25,13 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() isCondensed = false;
   menu: any;
   data: any;
-
+  role:string;
   menuItems = [];
 
   @ViewChild('sideMenu') sideMenu: ElementRef;
 
-  constructor(private eventService: EventService, private router: Router, public translate: TranslateService, private http: HttpClient) {
+
+  constructor(private eventService: EventService, private router: Router, public translate: TranslateService, private http: HttpClient, private tokenStorage: TokenStorage) {
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
         this._activateMenuDropdown();
@@ -139,7 +142,18 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
    * Initialize
    */
   initialize(): void {
-    this.menuItems = MENU;
+    const user = this.tokenStorage.getUser();
+    console.log('User object:', user);
+    if (user.roles && user.roles.includes('ROLE_ADMIN')) {
+      this.menuItems = ADMIN_MENU;
+     
+    } else if (user.roles && user.roles.includes('ROLE_CHEF')) {
+      this.menuItems = CHEF_MENU;
+      
+    } else {
+      this.menuItems = PERSONNEL_MENU;
+      
+    }
   }
 
   /**

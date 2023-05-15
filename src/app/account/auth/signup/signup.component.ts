@@ -25,24 +25,23 @@ export class SignupComponent implements OnInit {
   isLoginFailed = false;
   errorMessage = '';
   roles: string[] = [];
-  // set the currenr year
+  // set the current year
   year: number = new Date().getFullYear();
 
-  // tslint:disable-next-line: max-line-length
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService,
-    private userService: UserProfileService,private tokenStorage:TokenStorage,private authService:Auth2Service) { }
+    private userService: UserProfileService, private tokenStorage: TokenStorage, private authService: Auth2Service) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.signupForm = this.formBuilder.group({
-
-matriculP:['00000'],
-      firstname: ['', Validators.required],
-      lastname: ['', Validators.required],
-      department: ['', Validators.required],
-      phone: ['', Validators.required],
-      post: ['', Validators.required],
+      nom: ['', Validators.required],
+      prenom: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
+      departement: ['', Validators.required],
+      numTel: ['', [Validators.required, Validators.pattern(/^\+?[0-9]{3,}$/)]],
+      poste: ['', Validators.required],
       password: ['', Validators.required],
+      roles: ['1', Validators.required],
+      matriculeP: ['001', Validators.required],
     });
   }
 
@@ -60,24 +59,21 @@ matriculP:['00000'],
       return;
     } else {
       this.authService.register(this.signupForm.value).subscribe(
-        data=>{
-          this.router.navigate(['/dashbord'])
-  
-    
+        data => {
+          this.router.navigate(['/login']);
         },
-  
         err => {
           this.errorMessage = err.error.message;
           this.isLoginFailed = true;
           Swal.fire({
             position: 'top-end',
             icon: 'error',
-            title: 'Le compte exist déja '+this.tokenStorage.getUser().role_portail,
+            title: 'Le compte existe déjà ' + this.tokenStorage.getUser().role_portail,
             showConfirmButton: false,
             timer: 3000
           });
         }
-        )
+      );
     }
   }
 }

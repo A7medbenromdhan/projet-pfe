@@ -1,0 +1,31 @@
+<div class="container">
+    <h2>Manager (Chef) Approval</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Employee Name</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let conge of conges">
+          <td>{{ conge.id }}</td>
+          <td>{{ conge.employeeName }}</td>
+          <td>{{ conge.startDate | date: 'shortDate' }}</td>
+          <td>{{ conge.endDate | date: 'shortDate' }}</td>
+          <td>{{ conge.type }}</td>
+          <td>{{ conge.status }}</td>
+          <td>
+            <button class="btn btn-success" (click)="approveConge(conge.id)">Approve</button>
+            <button class="btn btn-danger" (click)="rejectConge(conge.id)">Reject</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

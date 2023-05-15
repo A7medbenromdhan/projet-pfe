@@ -1,0 +1,31 @@
+<div class="container">
+    <h2>Admin Approval</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Heure de sortie</th>
+          <th>Heure de retour</th>
+          <th>Motif</th>
+          <th>Durée</th>
+          <th>Statut</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let autorisation of autorisations">
+          <td>{{ autorisation.id }}</td>
+          <td>{{ autorisation.heureSortie | date: 'shortTime' }}</td>
+          <td>{{ autorisation.heureRetour | date: 'shortTime' }}</td>
+          <td>{{ autorisation.motif }}</td>
+          <td>{{ autorisation.duree }}</td>
+          <td>{{ autorisation.statut }}</td>
+          <td>
+            <button class="btn btn-success" (click)="approveAutorisation(autorisation.id)">Approuver</button>
+            <button class="btn btn-danger" (click)="rejectAutorisation(autorisation.id)">Rejeter</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

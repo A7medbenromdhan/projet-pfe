@@ -46,7 +46,8 @@ export class LoginComponent implements OnInit {
 
     this.form = this.fb.group({
       matriculeP: [""],
-      password: [""]
+      password: ['', [Validators.required, Validators.minLength(4)]],
+      rememberMe: [false],
     })
   }
 
@@ -56,6 +57,7 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(this.form.value).subscribe(
       (data) => {
+        console.log('login',data);
         this.tokenStorage.saveToken(data.accessToken);
         this.tokenStorage.saveUser(data);
         // localStorage.setItem("us",username);
@@ -92,5 +94,3 @@ export class LoginComponent implements OnInit {
     window.location.reload();
   }
 }
-
-/* */
