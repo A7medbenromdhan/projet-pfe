@@ -3,7 +3,7 @@ export interface Autorisation {
     idAutorisation?: number;
     heureSortie: Date;
     heureRetour: Date;
-    motif: number;
+    motif: string;
     duree: string;
     personnel?: any;
   }

@@ -12,7 +12,7 @@ export class AutorisationsComponent implements OnInit {
   constructor(private autorisationService: AutorisationService) {}
 
   ngOnInit(): void {
-    this.fetchAutorisations();
+   ;
   }
 
   approveAutorisation(autorisationId: number) {
@@ -43,7 +43,7 @@ export class AutorisationsComponent implements OnInit {
     );
   }
 
-  fetchAutorisations() {
+  /*fetchAutorisations() {
     // Assuming you have a method in the autorisationsService to fetch the autorisations based on the chefId
     this.autorisationService.getAuthorizationsByChefId(this.chefId).subscribe(
       (autorisations) => {
@@ -53,5 +53,5 @@ export class AutorisationsComponent implements OnInit {
         console.error(error);
       }
     );
-  }
+  }*/
 }

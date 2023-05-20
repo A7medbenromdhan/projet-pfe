@@ -18,6 +18,7 @@ export class CongesComponent implements OnInit {
   isAdmin: boolean = false;
   isManager: boolean = false;
   userConges: Conge[] = [];
+  EtypeCongeLabels = EtypeConge.EtypeCongeLabels; 
 
   formConge: FormGroup;
   editCongeForm: FormGroup;
@@ -45,11 +46,18 @@ export class CongesComponent implements OnInit {
       duree: ['', Validators.required],
       cause: ['', Validators.required],
       statut: [{ value: 'En Attente', disabled: true }, Validators.required],
+      
+
     });
 
     this.editCongeForm = this.formBuilder.group({
-      // Define the form controls for Edit Congé modal here
+      dateDebut: ['', Validators.required],
+      dateFin: ['', Validators.required],
+      duree: ['', Validators.required],
+      statut: ['', Validators.required],
+      cause: ['', Validators.required],
     });
+    
 
     this.demandeCongeForm = this.formBuilder.group({
       dateDebut: ['', Validators.required],
@@ -59,7 +67,8 @@ export class CongesComponent implements OnInit {
       cause: ['', Validators.required],
       matriculec: [this.tokenStorage.getUser().matriculeP],
       datedemande: ['', Validators.required],
-      typeConge: ['']
+      typeConge: [null, Validators.required],
+     
     });
   }
 
@@ -68,8 +77,25 @@ export class CongesComponent implements OnInit {
   }
 
   onEditConge() {
-    // Implement the logic for editing a Congé
+  if (this.editCongeForm.valid) {
+    const editedConge = this.editCongeForm.value;
+
+    // Update the Congé using the updateConge() method from the CongeService
+    this.congeService.updateConge(editedConge.matriculec, editedConge).subscribe(
+      () => {
+        console.log('Congé updated successfully');
+        // Perform any necessary actions after updating the Congé
+      },
+      (error) => {
+        console.error('Error updating Congé:', error);
+        // Handle the error appropriately (e.g., display an error message to the user)
+      }
+    );
+
+    // Close the edit modal or perform any other necessary actions
   }
+}
+
 
   onDemandeConge() {
     console.log(this.demandeCongeForm.value);
@@ -120,35 +146,55 @@ export class CongesComponent implements OnInit {
   }
  
   loadUserConges() {
-    
     const user = this.tokenStorage.getUser();
     const matricule = user.matriculeP;
-    console.log('user',matricule )
+    console.log('user', matricule);
+  
     this.congeService.getCongesByMatricule(matricule).subscribe(
       (data: Conge[]) => {
-        this.userConges = data;
-      },
+        // Modify the data to include the id property for each Congé object
+        this.userConges = data.map((conge: Conge) => {
+          return { ...conge, id: conge.id, getDuree: conge.getDuree };
+          
+        });
+      }, 
       (error: HttpErrorResponse) => {
-       
         console.error('Error:', error);
         // Handle the error appropriately (e.g., display an error message to the user)
       }
     );
   }
   
-  onDeleteConges(matricule: string) {
-    this.congeService.deleteCongesByMatricule(matricule)
-      .subscribe(
-        () => {
-          console.log('Congés deleted successfully');
-          // Refresh the list of Congés or perform any other necessary actions
-        },
-        (error) => {
-          console.error('Error deleting Congés:', error);
-          // Handle the error appropriately (e.g., display an error message)
-        }
-      );
+  
+  deleteCongeById(id: number) {
+    this.congeService.deleteCongesById(id).subscribe(
+      () => {
+        console.log('Congé deleted successfully');
+        // Show a success message or perform any other necessary actions
+      },
+      (error) => {
+        console.error('Error deleting Congé:', error);
+        // Handle the error appropriately (e.g., display an error message)
+      }
+    );
   }
+  
+  
+  onDeleteConge(id: number) {
+    this.congeService.deleteCongesById(id).subscribe(
+      () => {
+        console.log('Congé deleted successfully');
+        this.loadUserConges();
+        alert('Congé deleted successfully');
+      },
+      (error) => {
+        console.error('Error deleting Congé:', error);
+        // Handle the error appropriately (e.g., display an error message)
+        alert('An error occurred while deleting the Congé.');
+      }
+    );
+  }
+  
   
 
 

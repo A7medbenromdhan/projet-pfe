@@ -7,32 +7,41 @@ import { Autorisation } from '../models/autorisation.module';
   providedIn: 'root'
 })
 export class AutorisationService {
+  deleteAutorisation(id: any) {
+    throw new Error('Method not implemented.');
+  }
   private baseUrl = 'http://localhost:8082/api/autorisation';
 
   constructor(private http: HttpClient) { }
 
   // For Personnel
 
-  getAutorisations(): Observable<Autorisation[]> {
-    return this.http.get<Autorisation[]>(`${this.baseUrl}/list`);
-  }
+  getAutorisationsByMatricule(matricule: string): Observable<Autorisation[]> {
+    return this.http.get<Autorisation[]>(`${this.baseUrl}/getAutorisationsByMatricule/${matricule}`);
+  } 
 
+ 
   createAutorisation(autorisation: Autorisation): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/DemandeAutorisation`, autorisation);
+    return this.http.post<any>(`${this.baseUrl}/createAutorisation`, autorisation);
   }
+  updateAutorisation(matricule: string, autorisation: Autorisation): Observable<any> {
+    return this.http.put(`${this.baseUrl}/updateAutorisationsByMatricule/${matricule}`, autorisation);
+  }
+  
+  
+  
 
   // For Manager (Chef)
 
-  getAuthorizationsByChefId(chefId: number): Observable<any[]> {
-    const url = `${this.baseUrl}/authorizations?chefId=${chefId}`;
-    return this.http.get<any[]>(url);
-  }
+ 
 
   approveAuthorization(authorizationId: number): Observable<any> {
     const url = `${this.baseUrl}/authorizations/${authorizationId}/approve`;
     return this.http.put<any>(url, {});
   }
-
+  getAuthorizationsByChefId(chefId: string): Observable<Autorisation[]> {
+    return this.http.get<Autorisation[]>(`${this.baseUrl}/chef/${chefId}`);
+  }
   rejectAuthorization(authorizationId: number): Observable<any> {
     const url = `${this.baseUrl}/authorizations/${authorizationId}/reject`;
     return this.http.put<any>(url, {});
@@ -48,11 +57,9 @@ export class AutorisationService {
     return this.http.get<Autorisation>(`${this.baseUrl}/${id}`);
   }
 
-  update(id: number, autorisation: Autorisation): Observable<Autorisation> {
-    return this.http.put<Autorisation>(`${this.baseUrl}/update/${id}`, autorisation);
-  }
+  
 
-  delete(id: number): Observable<HttpResponse<any>> {
+  deleteAutorisationById(id: number): Observable<HttpResponse<any>> {
     return this.http.delete<any>(`${this.baseUrl}/delete/${id}`, { observe: 'response' });
   }
   

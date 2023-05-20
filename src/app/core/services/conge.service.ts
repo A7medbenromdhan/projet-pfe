@@ -16,20 +16,17 @@ export class CongeService {
   }
 
 
-  getCongeById(id: number): Observable<Conge> {
-    return this.http.get<Conge>(`${this.apiUrl}/${id}`);
-  }
-
   createConge(conge: Conge): Observable<any> {
     return this.http.post(`${this.apiUrl}/DemandeConge`, conge);
   }
 
-  updateConge(conge: Conge): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${conge.id}`, conge);
+  updateConge(matricule: string, conge: Conge): Observable<any> {
+    return this.http.put(`${this.apiUrl}/editConge/${matricule}`, conge);
   }
 
-  deleteCongesByMatricule(matricule: string) {
-    const url = `${this.apiUrl}/conges/${matricule}`;
+ 
+  deleteCongesById(id: number): Observable<any> {
+    const url = `${this.apiUrl}/conges/${id}`;
     return this.http.delete(url);
   }
 

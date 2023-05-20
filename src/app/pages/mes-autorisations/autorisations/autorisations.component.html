@@ -4,7 +4,7 @@
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center">
           <h4 class="card-title">Gestion des autorisations</h4>
-          <button class="btn btn-primary" (click)="openModal(demandeAutorisationModal, null)">Demande Autorisation</button>
+          <button class="btn btn-primary" (click)="openModal(demandeAutorisationModal)">Demande Autorisation</button>
         </div>
 
         <div class="table-responsive">
@@ -21,7 +21,27 @@
               </tr>
             </thead>
             <tbody>
-              <!-- Add your table body content here -->
+              <tr *ngFor="let autorisation of userAutorisations">
+                <td>{{ autorisation.id }}</td>
+                <td>{{ autorisation.heureSortie }}</td>
+                <td>{{ autorisation.heureRetour }}</td>
+                <td>{{ autorisation.motif }}</td>
+                <td>{{ autorisation.duree }}</td>
+                <td>{{ autorisation.statut }}</td>
+                <td>
+                  <div class="button-items">
+                    <button type="button" class="btn btn-info" (click)="openModal(viewAutorisationModal)">
+                      <i class="bx bx-show-alt font-size-16 align-items-center-2"></i>
+                    </button>
+                    <button type="button" class="btn btn-warning" (click)="openModal(editAutorisationModal) ">
+                      <i class="bx bx-edit font-size-16 align-items-center-2"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger" (click)="openModal(deleteAutorisationModal)">
+                      <i class="bx bx-trash font-size-16 align-items-center-2"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -30,14 +50,14 @@
   </div>
 </div>
 
-
-<ng-template #demandeAutorisationModal role="document" let-modal>
+<!-- Demande Autorisation Modal -->
+<ng-template #demandeAutorisationModal let-modal>
   <div class="modal-header">
     <h5 class="modal-title mt-0">Demande d'autorisation</h5>
     <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
-    <form [formGroup]="autorisationForm" (ngSubmit)="onDemandeAutorisation()">
+    <form [formGroup]="demandeAutorisationForm" (ngSubmit)="onDemandeAutorisation()">
       <div class="row">
         <div class="col-lg-6">
           <div class="mb-3">
@@ -56,11 +76,10 @@
         <div class="col-lg-12">
           <div class="mb-3">
             <label for="motif" class="form-label">Motif</label>
-            <select class="form-select form-select-sm" id="motif" formControlName="motif" required>
-              <option *ngFor="let motif of motifs" [value]="motif.idMotif">{{ motif.libelle }}</option>
-            </select>
+            <input type="text" class="form-control" id="motif" formControlName="motif" required>
           </div>
         </div>
+        
       </div>
       <div class="row">
         <div class="col-lg-12">
@@ -77,47 +96,28 @@
     </form>
   </div>
 </ng-template>
-<ng-template #viewAutorisationModal let-modal>
+
+
+
+<!-- Edit Autorisation Modal -->
+<ng-template #editAutorisationModal let-modal let-autorisation="data">
   <div class="modal-header">
-    <h5 class="modal-title mt-0">Voir Autorisation</h5>
+    <h5 class="modal-title mt-0">Modifier Autorisation</h5>
     <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
-    <form [formGroup]="autorisationForm">
-      <div class="row">
-        <div class="col-lg-4">
-          <div class="mb-3">
-            <label for="HeureSortie" class="form-label">Heure de sortie</label>
-            <input type="datetime-local" class="form-control form-control-sm" id="HeureSortie" formControlName="heureSortie" readonly>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="mb-3">
-            <label for="HeureRetour" class="form-label">Heure de retour</label>
-            <input type="datetime-local" class="form-control form-control-sm" id="HeureRetour" formControlName="heureRetour" readonly>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="mb-3">
-            <label for="Motif" class="form-label">Motif</label>
-            <input type="text" class="form-control form-control-sm" id="Motif" formControlName="motif" readonly>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="mb-3">
-            <label for="Duree" class="form-label">Durée</label>
-            <input type="text" class="form-control form-control-sm" id="Duree" formControlName="duree" readonly>
-          </div>
-        </div>
-      </div>
+    <form [formGroup]="editAutorisationForm" (ngSubmit)="onEditAutorisation()">
+      <!-- Form fields for editing autorisation -->
     </form>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Close click')">Fermer</button>
+    <button type="submit" class="btn btn-primary">Modifier Autorisation</button>
   </div>
 </ng-template>
 
-<ng-template #deleteAutorisationModal role="document" let-modal>
+<!-- Delete Autorisation Modal -->
+<ng-template #deleteAutorisationModal let-modal let-autorisation="data">
   <div class="modal-header">
     <h5 class="modal-title mt-0">Supprimer Autorisation</h5>
     <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
@@ -126,9 +126,7 @@
     <p>Etes-vous sûr de vouloir supprimer cette autorisation?</p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-danger" (click)="deleteAutorisation(viewAutorisationModal)">Supprimer</button>
+    <button type="button" class="btn btn-danger" (click)="deleteAutorisationById(autorisation.id)">Supprimer</button>
     <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Close click')">Annuler</button>
   </div>
 </ng-template>
-
-

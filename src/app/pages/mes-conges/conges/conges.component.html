@@ -28,18 +28,19 @@
                 <td>{{ conge.datedemande | date:'shortDate' }}</td>
                 <td>{{ conge.duree }}</td>
                 <td>{{ conge.statut }}</td>
-                <td>{{ conge.type }}</td>
+                <td>{{ conge.typeConge }}</td>
                 <td>
                   <div class="button-items">
-                    <button type="button" class="btn btn-info" (click)="openModal(viewCongeModal)">
-                      <i class="bx bx-show font-size-16 align-items-center-2"></i>
-                    </button>
+                    
                     <button type="button" class="btn btn-warning" (click)="openModal(editCongeModal)">
                       <i class="bx bx-edit font-size-16 align-items-center-2"></i>
                     </button>
-                    <button type="button" class="btn btn-danger" (click)="onDeleteConges(conge.matriculec)">
+                    
+                    <button type="button" class="btn btn-danger" (click)="onDeleteConge(conge.id)">
                       <i class="bx bx-trash font-size-16 align-items-center-2"></i>
                     </button>
+                    
+                    
                     
                     
                     
@@ -148,22 +149,21 @@
     <div class="mb-3">
       <label for="typeConge" class="form-label">Type Congé</label>
       <select class="form-control form-control-sm" id="typeConge" formControlName="typeConge">
-        <option value="ANNUEL">Annuel</option>
-        <option value="MALADIE">Maladie</option>
-        <option value="MATERNITE">Maternité</option>
-        <option value="PATERNITE">Paternité</option>
-        <option value="SANS_SOLDE">Sans solde</option>
+        <option *ngFor="let type of EtypeConge | keyvalue" [value]="type.key">{{ EtypeCongeLabels[type.key] }}</option>
       </select>
     </div>
   </div>
-  
 </div>
+
+
+
 <div class="col-lg-4">
 <div class="mb-3">
 <label for="datedemande" class="form-label">Date demande</label>
 <input type="date" class="form-control form-control-sm" id="datedemande" formControlName="datedemande">
 </div>
 </div>
+
 
 <div class="text-end">
 <button type="submit" class="btn btn-primary">Enregistrer</button>
@@ -172,65 +172,3 @@
 
   </div>
 </ng-template>
-<ng-template #viewCongeModal role="document" let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title mt-0">Voir Congé</h5>
-    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
-  </div>
-  <div class="modal-body">
-    <form [formGroup]="formConge">
-      <div class="row">
-        <div class="col-lg-4">
-          <div class="mb-3">
-            <label for="dateDebut" class="form-label">Date début</label>
-            <input type="date" class="form-control form-control-sm" id="dateDebut" formControlName="dateDebut" readonly>
-            </div>
-            </div>
-            <div class="col-lg-4">
-            <div class="mb-3">
-            <label for="dateFin" class="form-label">Date fin</label>
-            <input type="date" class="form-control form-control-sm" id="dateFin" formControlName="dateFin" readonly>
-            </div>
-            </div>
-            <div class="col-lg-4">
-            <div class="mb-3">
-            <label for="duree" class="form-label">Durée</label>
-            <input type="number" class="form-control form-control-sm" id="duree" formControlName="duree" readonly>
-            </div>
-            </div>
-            </div>
-            <div class="row">
-            <div class="col-lg-4">
-            <div class="mb-3">
-            <label for="statut" class="form-label">Statut</label>
-            <input type="text" class="form-control form-control-sm" id="statut" formControlName="statut" readonly>
-            </div>
-            </div>
-            <div class="col-lg-4">
-            <div class="mb-3">
-            <label for="cause" class="form-label">Cause</label>
-            <input type="text" class="form-control form-control-sm" id="cause" formControlName="cause" readonly>
-            </div>
-            </div>
-            <div class="col-lg-4">
-            <div class="mb-3">
-            <label for="typeConge" class="form-label">Type Congé</label>
-            <input type="text" class="form-control form-control-sm" id="typeConge" formControlName="typeConge" readonly>
-            </div>
-            </div>
-            </div>
-            <div class="row">
-            <div class="col-lg-4">
-            <div class="mb-3">
-            <label for="datedemande" class="form-label">Date demande</label>
-            <input type="date" class="form-control form-control-sm" id="datedemande" formControlName="datedemande" readonly>
-            </div>
-            </div>
-            </div>
-            </form>
-            
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Fermer</button>
-              </div>
-            </ng-template>
